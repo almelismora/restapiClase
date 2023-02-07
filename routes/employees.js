@@ -12,6 +12,6 @@ const { getEmployees, createEmployee, updateEmployee, deleteEmployee, getEmploye
 
   router.put('/employees', updateEmployee )
 
-  router.delete('/employees', deleteEmployee)
+  router.delete('/employees/:id', deleteEmployee)
 
   module.exports = router;
