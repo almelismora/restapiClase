@@ -1,22 +1,42 @@
-const getEmployees = (req, res, next) => {
-    res.send('Obteniendo empleados');
+const pool = require('../db')
+
+
+const getEmployees = async (req, res, next) => {
+ 
+
+    const [rows] = await pool.query('SELECT * FROM employee;')
+
+    res.json(rows);
 }
 
-const createEmployees = (req, res, next) => {
-    res.send('Creando empleados');
+const getEmployee = ( req, res ) => {
+  res.send('Obteniendo empleador')
 }
 
-const updateEmployees = (req, res, next) => {
+const createEmployee = async (req, res, next) => {
+  const { name, salary } = req.body
+
+    const [rows] = await pool.query('INSERT INTO employee (name, salary) VALUES (?, ?)', [name, salary])
+    //console.log(name, salary)
+    res.send({ 
+      id: rows.insertId,
+      name, 
+      salary
+     });
+}
+
+const updateEmployee = (req, res, next) => {
   res.send('Actualizando empleados');
 }
 
-const deleteEmployees =  (req, res, next) => {
+const deleteEmployee =  (req, res, next) => {
   res.send('Eliminando empleados');
 }
 
 module.exports = { 
     getEmployees,
-    createEmployees, 
-    updateEmployees,
-    deleteEmployees  
+    createEmployee, 
+    updateEmployee,
+    deleteEmployee,
+    getEmployee  
   }
